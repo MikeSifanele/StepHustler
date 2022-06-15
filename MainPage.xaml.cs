@@ -26,5 +26,15 @@ namespace StepHustler
         {
             this.InitializeComponent();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ChartWebView_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+
+        }
     }
 }

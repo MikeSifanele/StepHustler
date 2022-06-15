@@ -6,9 +6,31 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="HeaderGrid" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="TitleTextBlock" Text="Step Hustler" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24" FontFamily="Segoe script"/>
+        </Grid>
+        <Grid x:Name="BodyGrid" Grid.Row="1">
+            <WebView Grid.Row="0" Grid.Column="0" x:Name="ChartWebView" DefaultBackgroundColor="Black" Source="ms-appx-web:///Chart/Index.html" ScriptNotify="ChartWebView_ScriptNotify"/>
+        </Grid>
+        <Grid x:Name="FooterGrid" Grid.Row="2">
+            
+        </Grid>
     </Grid>
 </Page>
