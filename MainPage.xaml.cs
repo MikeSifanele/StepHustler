@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -12,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Threading;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -22,6 +24,7 @@ namespace StepHustler
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private DispatcherTimer _timer;
         public MainPage()
         {
             this.InitializeComponent();
@@ -29,12 +32,62 @@ namespace StepHustler
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            _timer = new DispatcherTimer()
+            {
+                Interval = TimeSpan.FromSeconds(1),
+            };
+
+            _timer.Tick += TimerTick;
+        }
+
+        private void TimerTick(object sender, object e)
+        {
+            try
+            {
+                
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void ChartWebViewScriptNotify(object sender, NotifyEventArgs e)
+        {
 
         }
 
-        private void ChartWebView_ScriptNotify(object sender, NotifyEventArgs e)
+        private void TimerButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if(TimerButton.Content?.ToString() == "Start")
+                {
+                    _timer.Start();
+                    TimerButton.Content = "Stop";
+                    LogToConsole("Timer Stopped", Colors.Wheat);
 
+                }
+                else
+                {
+                    _timer.Stop();
+                    TimerButton.Content = "Start";
+                    LogToConsole("Timer Started", Colors.Wheat);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                LogToConsole(ex.Message, Colors.Red);
+            }
+        }
+        private void LogToConsole(string message, Color color)
+        {
+            ConsoleListBox.Items.Add(new ListBoxItem()
+            {
+                Content = $"{DateTime.Now:HH:mm:ss} {message}",
+                Foreground = new SolidColorBrush(color)
+            });
         }
     }
 }

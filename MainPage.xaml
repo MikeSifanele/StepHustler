@@ -27,10 +27,27 @@
             <TextBlock x:Name="TitleTextBlock" Text="Step Hustler" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="24" FontFamily="Segoe script"/>
         </Grid>
         <Grid x:Name="BodyGrid" Grid.Row="1">
-            <WebView Grid.Row="0" Grid.Column="0" x:Name="ChartWebView" DefaultBackgroundColor="Black" Source="ms-appx-web:///Chart/Index.html" ScriptNotify="ChartWebView_ScriptNotify"/>
+            <WebView Grid.Row="0" Grid.Column="0" x:Name="ChartWebView" DefaultBackgroundColor="Black" Source="ms-appx-web:///Chart/Index.html" ScriptNotify="ChartWebViewScriptNotify"/>
         </Grid>
         <Grid x:Name="FooterGrid" Grid.Row="2">
-            
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="ConsoleListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Padding="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontFamily="Cascadia Mono" FontSize="8" Margin="0" Padding="2"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Grid Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center">
+                <Button x:Name="TimerButton" Content="Start" Click="TimerButton_Click"/>
+            </Grid>
         </Grid>
     </Grid>
 </Page>
