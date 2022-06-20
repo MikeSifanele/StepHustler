@@ -161,7 +161,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="DataSource\StepIndex\Rates\M1.tsv" />
+    <Content Include="DataSource\StepIndex\Rates\M1.tsv" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
