@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Threading;
+using Windows.Storage;
+using StepHustler.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -25,6 +27,7 @@ namespace StepHustler
     public sealed partial class MainPage : Page
     {
         private DispatcherTimer _timer;
+        private Rates[] _rates;
         public MainPage()
         {
             this.InitializeComponent();
@@ -38,6 +41,35 @@ namespace StepHustler
             };
 
             _timer.Tick += TimerTick;
+
+            LoadRates();
+        }
+        private async void LoadRates(string filename = @"DataSource\StepIndex\Rates\M1")
+        {
+            try
+            {
+                var rates = new List<Rates>();
+                var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///{filename}.tsv"));
+
+                using (var inputStream = await file.OpenReadAsync())
+                using (var classicStream = inputStream.AsStreamForRead())
+                using (var streamReader = new StreamReader(classicStream))
+                {
+                    _ = streamReader.ReadLine();
+
+                    while (streamReader.Peek() >= 0)
+                    {
+                        rates.Add(new Rates(streamReader.ReadLine().Split('\t')));
+                    }
+                }
+
+                _rates = rates.ToArray();
+                rates = null;
+            }
+            catch (Exception ex)
+            {
+                LogToConsole(ex.Message, Colors.Red);
+            }
         }
 
         private void TimerTick(object sender, object e)
@@ -46,9 +78,9 @@ namespace StepHustler
             {
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                LogToConsole(ex.Message, Colors.Red);
             }
         }
 
