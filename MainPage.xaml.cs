@@ -97,14 +97,14 @@ namespace StepHustler
                 {
                     _timer.Start();
                     TimerButton.Content = "Stop";
-                    LogToConsole("Timer Stopped", Colors.Wheat);
+                    LogToConsole("Timer Started", Colors.Wheat);
 
                 }
                 else
                 {
                     _timer.Stop();
                     TimerButton.Content = "Start";
-                    LogToConsole("Timer Started", Colors.Wheat);
+                    LogToConsole("Timer Stopped", Colors.Wheat);
                 }
                 
             }
