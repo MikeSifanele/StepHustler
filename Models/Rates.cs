@@ -23,6 +23,15 @@ namespace StepHustler.Models
             Low = float.Parse(data[4], CultureInfo.InvariantCulture.NumberFormat);
             Close = float.Parse(data[5], CultureInfo.InvariantCulture.NumberFormat);
         }
+        public Rates(float[] data)
+        {
+            Timestamp = default;
+
+            Open = data[0];
+            High = data[1];
+            Low = data[2];
+            Close = data[3];
+        }
         public float[] ToFloatArray(float? maxValue = null)
         {
             if(maxValue.HasValue)
