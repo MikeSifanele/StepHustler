@@ -27,7 +27,7 @@ namespace StepHustler
     public sealed partial class MainPage : Page
     {
         private DispatcherTimer _timer;
-        private Rates[] _rates;
+        private List<Rates[]> _rates;
         public MainPage()
         {
             this.InitializeComponent();
@@ -48,7 +48,9 @@ namespace StepHustler
         {
             try
             {
-                var rates = new List<Rates>();
+                var i = 0;
+                var rates = new Rates();
+                var ratesList = new List<Rates>();
                 var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///{filename}.tsv"));
 
                 using (var inputStream = await file.OpenReadAsync())
@@ -59,12 +61,26 @@ namespace StepHustler
 
                     while (streamReader.Peek() >= 0)
                     {
-                        rates.Add(new Rates(streamReader.ReadLine().Split('\t')));
+                        rates = new Rates(streamReader.ReadLine().Split('\t'));
+
+                        if (i > 0 && ratesList[i - 1].Timestamp.AddMinutes(1) != rates.Timestamp)
+                        {
+                            if(ratesList.Count() > 10_000)
+                                _rates.Add(ratesList.ToArray());
+
+                            i = 0;
+                            ratesList = null;
+                        }
+
+                        ratesList.Add(rates);
+                        i++;
                     }
                 }
 
-                _rates = rates.ToArray();
-                rates = null;
+                if(ratesList?.Count > 5_000)
+                    _rates.Add(ratesList.ToArray());
+
+                ratesList = null;
             }
             catch (Exception ex)
             {
